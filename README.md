@@ -23,10 +23,7 @@ fn main() {
     let s = "foo";
 
     println!("{}", pad(s, 5));
-    let s1 = match pad_char(s, 6, ' ')) {
-        Ok(s) => s,
-        Err(e) => Err("Error: {}", e)
-    };
+    let s1 = pad_char(s, 6, ' ');
     println!("{:?}", s1);
     
     // You can use pad_with() too now.

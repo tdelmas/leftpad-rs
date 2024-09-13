@@ -19,21 +19,18 @@ pub fn pad(s: &str, n: usize) -> String {
 }
 
 /// Left-pads the string with the supplied character.
-pub fn pad_char(s: &str, n: usize, c: char) -> Result<String, &str> {
+pub fn pad_char(s: &str, n: usize, c: char) -> String {
     let l = s.len();
 
-    if n == 0 {
-        return Err("invalid size");
-    }
     if n <= l {
-        return Ok(s.to_string());
+        return s.to_string();
     }
     let f = c.to_string().repeat(n - l);
-    Ok(format!("{}{}", f, s))
+    format!("{}{}", f, s)
 }
 
 /// Useful alias
-pub fn pad_with(s: &str, n: usize, c: char) -> Result<String, &str> {
+pub fn pad_with(s: &str, n: usize, c: char) -> String {
     pad_char(s, n, c)
 }
 
@@ -63,17 +60,17 @@ mod tests {
     #[case(4, "Xfoo")]
     #[case(5, "XXfoo")]
     fn test_pad_char(#[case] n: usize, #[case] want: &str) {
-        assert_eq!(Ok(want.to_string()), pad_char("foo", n, 'X'));
+        assert_eq!(want.to_string(), pad_char("foo", n, 'X'));
     }
 
     #[test]
     fn test_pad_char_0() {
-        assert_eq!(Err("invalid size"), pad_char("foo", 0, 'X'))
+        assert_eq!("foo".to_string(), pad_char("foo", 0, 'X'))
     }
 
     #[test]
     fn test_nopad_char() {
-        assert_ne!(Ok("foobar".to_string()), pad_char("foo", 6, 'X'))
+        assert_ne!("foobar".to_string(), pad_char("foo", 6, 'X'))
     }
 
     #[rstest]
@@ -82,16 +79,16 @@ mod tests {
     #[case(4, "Xfoo")]
     #[case(5, "XXfoo")]
     fn test_pad_with(#[case] n: usize, #[case] want: &str) {
-        assert_eq!(Ok(want.to_string()), pad_with("foo", n, 'X'));
+        assert_eq!(want.to_string(), pad_with("foo", n, 'X'));
     }
 
     #[test]
     fn test_pad_with_0() {
-        assert_eq!(Err("invalid size"), pad_with("foo", 0, 'X'))
+        assert_eq!("foo".to_string(), pad_with("foo", 0, 'X'))
     }
 
     #[test]
     fn test_nopad_with() {
-        assert_ne!(Ok("foobar".to_string()), pad_with("foo", 6, 'X'))
+        assert_ne!("foobar".to_string(), pad_with("foo", 6, 'X'))
     }
 }
